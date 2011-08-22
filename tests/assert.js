@@ -1,7 +1,7 @@
 define(['bunit'], function(bu) {
     var assert = bu.assert;
 
-    bu.tests('Assert', {
+    bu.suite('Assert', {
         _: {
             a: 5
         },

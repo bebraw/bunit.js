@@ -5,7 +5,8 @@ require({paths: {bunit: '../src/bunit'}}, ['tests', 'bunit'], function(tests, bu
         document.body.appendChild(bu.playbackUI());
         document.body.appendChild(outputArea)
 
-        bu.tests().run({
+        bu.run({
+            tests: tests,
             output: bu.HTMLOutput(outputArea),
             refresh: 2000
         });

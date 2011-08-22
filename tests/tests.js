@@ -1,1 +1,5 @@
-define(['assert'], function() {});
+define(['assert'], function(assert) {
+    return {
+        assert: assert
+    };
+});
