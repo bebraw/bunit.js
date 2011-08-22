@@ -27,8 +27,14 @@ define(function() {
     var run = function(opts) {
         var passedTests = 0;
         var testTotal = 0;
+        var out = [];
 
-        var output = 'output' in opts? opts.output: function() {};
+        if(!('output' in opts)) {
+            console.log('bunit.run is missing output sink!');
+
+            return;
+        }
+
         var refresh = 'refresh' in opts? opts.refresh: 0;
 
         if(refresh) {
@@ -43,7 +49,7 @@ define(function() {
             var attrs = testSet._ || {};
             delete testSet._;
 
-            output({state: 'started', text: 'Running "' + model.name + '" tests'});
+            out.push({state: 'started', text: 'Running "' + model.name + '" tests'});
 
             for(var testName in testSet) {
                 var test = testSet[testName];
@@ -51,20 +57,30 @@ define(function() {
                 try {
                     test.apply(clone(attrs));
 
-                    output({state: 'passed', text: 'PASSED: ' + testName});
+                    out.push({state: 'passed', text: 'PASSED: ' + testName});
 
                     passedTests++;
                 }
                 catch(e) {
-                    output({state: 'failed', text: 'FAILED: ' + testName});
-                    output({state: 'error', text: e});
+                    out.push({state: 'failed', text: 'FAILED: ' + testName});
+                    out.push({state: 'error', text: e});
                 }
 
                 testTotal++;
             }
         }
 
-        output({state: 'finished', text: passedTests + '/' + testTotal + ' tests passed'});        
+        var finished = {state: 'finished', text: passedTests + '/' + testTotal + ' tests passed'};
+        out.unshift(finished);
+        out.push(finished);
+
+        var output = opts.output;
+
+        for(i = 0; i < out.length; i++) {
+            var line = out[i];
+
+            output(line);
+        }
     };
 
     // playback
