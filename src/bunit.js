@@ -99,26 +99,25 @@ define(function() {
 
     var playbackUI = function() {
         var elem = document.createElement('div');
-        var stopped = false;
+        var stopped = !('_timerId' in run);
 
-        elem.id = 'playback';
-        elem.innerHTML = 'Stop tests';
-
-        elem.onclick = function() {
-            if(stopped) {
-                play();
-                elem.innerHTML = 'Stop tests';
-                stopped = false;
-            }
-            else {
-                stop();
-                elem.innerHTML = 'Play tests';
-                stopped = true;
-            }
+        var setText = function() {
+            elem.innerHTML = stopped? 'Stop tests': 'Play tests';
         };
 
+        var setState = function() {
+            stopped = !stopped;
+            setText();
+            stopped? play(): stop();
+        };
+
+        elem.id = 'playback';
+        elem.onclick = setState;
+
+        setText();
+
         return elem;
-    }
+    };
 
     // output
     var consoleOutput = function(report) {
