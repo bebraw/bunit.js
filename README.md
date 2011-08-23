@@ -76,9 +76,9 @@ require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
 The examples above sets up some UI, refresh (tests are run once per 2 secs) and loads actual tests to be run. "tests" is a module used to import actual test modules that are then passed onto "run". It may look like this:
 
 ```javascript
-define(['assert'], function(assert) {
+define(['color'], function(color) {
     return {
-        assert: assert
+        color: color
     };
 });
 ```
