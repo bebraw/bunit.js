@@ -43,23 +43,37 @@ Generally it is a good idea to create your suites based on some feature. It's al
 In order to actually run your tests, you might want to do something like this (main.js):
 
 ```javascript
-require({paths: {bunit: '../src/bunit'}}, ['tests', 'bunit'], function(tests, bu) {
-    require.ready(function() {
-        var outputArea = document.createElement('div');
+require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
+    function(bunit, tests) {
+        require.ready(function() {
+            var outputArea = document.createElement('div');
 
-        document.body.appendChild(bu.playbackUI());
-        document.body.appendChild(outputArea)
+            document.body.appendChild(bunit.playbackUI());
+            document.body.appendChild(outputArea)
 
-        bu.run({
-            tests: tests,
-            output: bu.HTMLOutput(outputArea),
-            refresh: 2000
+            bunit.run({
+                tests: tests,
+                output: bunit.HTMLOutput(outputArea),
+                refresh: 2000
+            });
         });
-    });
-});
+    }
+);
 ```
 
-The code above sets up some UI, refresh (tests are run once per 2 secs) and loads actual tests to be run. "tests" is a module used to import actual test modules that are then passed onto "run". It may look like this:
+There's a handy shortcut, defaultUI, that may be used to reach the same result. Here's an example of that:
+
+```javascript
+require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
+    function(bunit, tests) {
+        require.ready(function() {
+            bunit.defaultUI(tests);
+        });
+    }
+);
+```
+
+The examples above sets up some UI, refresh (tests are run once per 2 secs) and loads actual tests to be run. "tests" is a module used to import actual test modules that are then passed onto "run". It may look like this:
 
 ```javascript
 define(['assert'], function(assert) {

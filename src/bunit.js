@@ -302,6 +302,19 @@ define(function() {
         return ret;
     }
 
+    var defaultUI = function(tests) {
+        var outputArea = document.createElement('div');
+
+        document.body.appendChild(playbackUI());
+        document.body.appendChild(outputArea);
+
+        run({
+            tests: tests,
+            output: HTMLOutput(outputArea),
+            refresh: 2000
+        });
+    };
+
     return {
         suite: suite,
         run: run,
@@ -310,6 +323,7 @@ define(function() {
         playbackUI: playbackUI,
         consoleOutput: consoleOutput,
         HTMLOutput: HTMLOutput,
-        assert: assert
+        assert: assert,
+        defaultUI: defaultUI
     };
 });
