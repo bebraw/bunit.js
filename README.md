@@ -109,3 +109,8 @@ assert(a).is('array', 'number'); // ok, matches number
 assert(a).within(2, 4, 10); // ok, matches 10
 assert(a).within(3); // not ok, raises AssertionError
 ```
+
+License
+-------
+
+bunit.js is available under MIT license. See LICENSE for more details.
