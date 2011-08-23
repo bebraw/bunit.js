@@ -110,6 +110,11 @@ assert(a).within(2, 4, 10); // ok, matches 10
 assert(a).within(3); // not ok, raises AssertionError
 ```
 
+Other libraries
+---------------
+
+See https://github.com/bebraw/jswiki/wiki/Testing-frameworks .
+
 License
 -------
 
