@@ -73,8 +73,10 @@ define(function() {
             var model = run.testsToRun[i];
             var testSet = model.tests;
 
-            var attrs = testSet._ || {};
+            var attrs = '_' in testSet? testSet._: {};
             delete testSet._;
+
+            var setUp = 'setUp' in testSet? testSet.setUp: function() {};
 
             out.push({state: 'started', text: 'Running "' + model.name + '" tests'});
 
@@ -82,7 +84,7 @@ define(function() {
                 var test = testSet[testName];
 
                 try {
-                    test.apply(clone(attrs));
+                    test.apply(clone(attrs), setUp());
 
                     out.push({state: 'passed', text: 'PASSED: ' + testName});
 

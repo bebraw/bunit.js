@@ -26,7 +26,11 @@ define(['bunit'], function(bu) {
         _: { // set up (run before each test)
             a: 5
         },
-        someTest: function() {
+        setUp: function() { // another, more robust way to set up
+            return [5, 'foo'];
+        },
+        someTest: function(a, b) {
+            // a = 5, b = 'foo'
             assert(this.a).equals(5); // access set up attributes via this
         },
         ... // more tests
