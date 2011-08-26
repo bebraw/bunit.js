@@ -1,4 +1,4 @@
-define(['assert'], function(assert) {
+define(['./assert'], function(assert) {
     return {
         assert: assert
     };
