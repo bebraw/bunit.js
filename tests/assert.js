@@ -32,6 +32,10 @@ define(['bunit'], function(bunit) {
         },
         arrays: function() {
             assert([1, 2, 3]).equals([1, 2, 3]);
+            assert([1, 2, 3]).not().equals([1]);
+            assert([1, 2, 3]).not().equals([]);
+            assert([1]).not().equals([1, 2, 3]);
+            assert([]).not().equals([1, 2, 3]);
         }
     });
 });
