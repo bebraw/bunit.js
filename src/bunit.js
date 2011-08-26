@@ -77,6 +77,7 @@ define(function() {
             delete testSet._;
 
             var setUp = 'setUp' in testSet? testSet.setUp: function() {};
+            delete testSet.setUp;
 
             out.push({state: 'started', text: 'Running "' + model.name + '" tests'});
 
