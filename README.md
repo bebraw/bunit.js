@@ -5,24 +5,22 @@ bunit.js provides a simple way to define unit tests and run them on a web page. 
 
 Essentially you'll want to:
 
-1. Define your tests (tests/assert.js) using bunit.suite and bunit.assert.
+1. Define your tests (tests/assert.js) using bunit and bunit.assert.
 2. Import your tests and bunit (tests/main.js).
 3. Execute your tests using bunit.run. "run" discovers all imported suites automatically.
 
 Suite API
 ---------
 
-The suite API can be thought to consist of two separate parts. One ("suite") is used to define actual test suites while the other part ("run" + misc. funcs) is used to execute these suites.
-
 ### suite
 
 A simple test suite may look like this:
 
 ```javascript
-define(['bunit'], function(bu) {
+define(['bunit'], function(bunit) {
     var assert = bu.assert;
 
-    bu.suite('suite name', {
+    bunit('suite name', {
         _: { // set up (run before each test)
             a: 5
         },
@@ -55,10 +53,10 @@ require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
             document.body.appendChild(bunit.playbackUI());
             document.body.appendChild(outputArea)
 
-            bunit.run({
-                tests: tests,
+            var r = bunit.runner();
+            r.run({
                 output: bunit.HTMLOutput(outputArea),
-                refresh: 2000
+                interval: 2000
             });
         });
     }
@@ -71,13 +69,16 @@ There's a handy shortcut, defaultUI, that may be used to reach the same result. 
 require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
     function(bunit, tests) {
         require.ready(function() {
-            bunit.defaultUI(tests);
+            var r = bunit.runner();
+
+            r.defaultUI();
+            r.run();
         });
     }
 );
 ```
 
-The examples above sets up some UI, refresh (tests are run once per 2 secs) and loads actual tests to be run. "tests" is a module used to import actual test modules that are then passed onto "run". It may look like this:
+The examples above sets up some UI, interval (tests are run once per 2 secs) and loads actual tests to be run. "tests" is a module used to import actual test modules. It may look like this:
 
 ```javascript
 define(['color'], function(color) {
