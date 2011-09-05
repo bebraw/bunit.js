@@ -17,9 +17,7 @@ bunit.js provides a simple way to define test suites containing multiple tests. 
 A simple test suite definition may look like this:
 
 ```javascript
-define(['bunit'], function(bunit) {
-    var assert = bunit.assert;
-
+define(['bunit', 'assert'], function(bunit, assert) {
     bunit('suite name', {
         _: { // set up (run before each test)
             a: 5
@@ -52,7 +50,12 @@ In order to actually run your tests, you might want to do something like this (m
 
 ```javascript
 require(
-    {paths: {bunit: 'src/bunit'}},
+    {
+        paths: {
+            assert: 'lib/assert',
+            bunit: 'src/bunit'
+        }
+    },
     ['bunit', 'tests'],
     function(bunit, tests) {
         require.ready(function() {
@@ -75,7 +78,12 @@ There's a handy shortcut, defaultUI, that may be used to reach the same result. 
 
 ```javascript
 require(
-    {paths: {bunit: '../src/bunit'}},
+    {
+        paths: {
+            assert: 'lib/assert',
+            bunit: 'src/bunit'
+        }
+    },
     ['bunit', 'tests'],
     function(bunit, tests) {
         require.ready(function() {
@@ -123,7 +131,7 @@ assert(a).within(2, 4, 10); // ok, matches 10
 assert(a).within(3); // not ok, raises AssertionError
 ```
 
-Note that you do not have to use the assertion library provided with bunit.js. You can replace it entirely with something else. It's totally up to you.
+Note that you do not have to use the assertion library provided with bunit.js. You can easily replace it entirely with something else.
 
 Other libraries
 ---------------

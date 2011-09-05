@@ -1,6 +1,7 @@
 require(
     {
         paths: {
+            assert: 'src/assert',
             bunit: 'src/bunit'
         }
     },

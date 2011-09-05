@@ -1,5 +1,4 @@
-define(['bunit'], function(bunit) {
-    var assert = bunit.assert;
+define(['bunit', 'assert'], function(bunit, assert) {
     var toreDown = false;
 
     bunit('Bunit', {
