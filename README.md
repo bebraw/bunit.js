@@ -48,7 +48,9 @@ Generally it is a good idea to create your suites based on some feature. It's al
 In order to actually run your tests, you might want to do something like this (main.js):
 
 ```javascript
-require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
+require(
+    {paths: {bunit: 'src/bunit'}},
+    ['bunit', 'tests'],
     function(bunit, tests) {
         require.ready(function() {
             var outputArea = document.createElement('div');
@@ -69,7 +71,9 @@ require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
 There's a handy shortcut, defaultUI, that may be used to reach the same result. Here's an example of that:
 
 ```javascript
-require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
+require(
+    {paths: {bunit: '../src/bunit'}},
+    ['bunit', 'tests'],
     function(bunit, tests) {
         require.ready(function() {
             var r = bunit.runner();
@@ -86,6 +90,8 @@ The examples above sets up some UI, interval (tests are run once per 2 secs) and
 ```javascript
 define(['./color']);
 ```
+
+You could easily define these kind of test sets and set up separate test pages for them in case you have a large amount of tests to run.
 
 Assertion API
 -------------
