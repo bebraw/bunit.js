@@ -1,20 +1,20 @@
 bunit.js
 ========
 
-bunit.js provides a simple way to define unit tests and run them on a web page. See "tests" directory for a concrete example on how to use this.
+bunit.js provides a simple way to define unit tests and run them using a web page. In order to use it, you'll likely want to do something like this:
 
-Essentially you'll want to:
+1. Define your tests (ie. tests/assert.js) using bunit and bunit.assert.
+2. Import your tests and bunit at your test main (ie. main.js).
+3. Execute your tests using bunit. It discovers the tests automatically as long as you import them via main somehow.
 
-1. Define your tests (tests/assert.js) using bunit and bunit.assert.
-2. Import your tests and bunit (tests/main.js).
-3. Execute your tests using bunit.run. "run" discovers all imported suites automatically.
+I'll cover the API in more detail next and provide more concrete guidance in case the above sounded weird to you.
 
 Suite API
 ---------
 
-### suite
+bunit.js provides a simple way to define test suites containing multiple tests. Each of these suites will be run separately by the test runner.
 
-A simple test suite may look like this:
+A simple test suite definition may look like this:
 
 ```javascript
 define(['bunit'], function(bunit) {
@@ -40,10 +40,13 @@ define(['bunit'], function(bunit) {
 
 ```
 
+As you can see there are two ways to set up your tests. _ provides a quick way to set some initial values. These will be available via "this". In case you need to do something more complex, you'll likely want to use setUp method instead. It returns an array of parameters that is then passed to each test. Both of these get called before each test is run.
+
+There is also a tearDown method that is run after each test. This can be handy for releasing resources (ie. db or similar).
+
 Generally it is a good idea to create your suites based on some feature. It's also possible to construct their content dynamically (ie. based on configuration and templates). This can be a powerful way to construct maintainable tests.
 
-
-### run
+### Running tests
 
 In order to actually run your tests, you might want to do something like this (main.js):
 
@@ -119,6 +122,8 @@ assert(a).is('array', 'number'); // ok, matches number
 assert(a).within(2, 4, 10); // ok, matches 10
 assert(a).within(3); // not ok, raises AssertionError
 ```
+
+Note that you do not have to use the assertion library provided with bunit.js. You can replace it entirely with something else. It's totally up to you.
 
 Other libraries
 ---------------
