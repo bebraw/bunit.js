@@ -138,6 +138,12 @@ Other libraries
 
 See https://github.com/bebraw/jswiki/wiki/Testing-frameworks .
 
+Projects using bunit.js
+-----------------------
+
+* https://github.com/bebraw/turtles.js
+* https://github.com/bebraw/colorjs
+
 License
 -------
 
