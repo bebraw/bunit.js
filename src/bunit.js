@@ -84,6 +84,9 @@ define(['lib/reload', 'src/assert'], function(reload, assert) {
                     var setUp = 'setUp' in testSet? testSet.setUp: function() {};
                     delete testSet.setUp;
 
+                    var tearDown = 'tearDown' in testSet? testSet.tearDown: function() {};
+                    delete testSet.tearDown;
+
                     out.push({state: 'started', text: 'Running "' + model.name + '" tests'});
 
                     for(var testName in testSet) {
@@ -100,6 +103,8 @@ define(['lib/reload', 'src/assert'], function(reload, assert) {
                             out.push({state: 'failed', text: 'FAILED: ' + testName});
                             out.push({state: 'error', text: e});
                         }
+
+                        tearDown();
 
                         testTotal++;
                     }

@@ -27,6 +27,9 @@ define(['bunit'], function(bunit) {
         setUp: function() { // another, more robust way to set up
             return [5, 'foo'];
         },
+        tearDown: function() {
+            ... // executed after each test whether it passed or not
+        },
         someTest: function(a, b) {
             // a = 5, b = 'foo'
             assert(this.a).equals(5); // access set up attributes via this
@@ -81,11 +84,7 @@ require({paths: {bunit: '../src/bunit'}}, ['bunit', 'tests'],
 The examples above sets up some UI, interval (tests are run once per 2 secs) and loads actual tests to be run. "tests" is a module used to import actual test modules. It may look like this:
 
 ```javascript
-define(['color'], function(color) {
-    return {
-        color: color
-    };
-});
+define(['./color']);
 ```
 
 Assertion API
