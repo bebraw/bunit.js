@@ -1,4 +1,4 @@
-define(['lib/reload', 'src/assert'], function(reload, assert) {
+define(['lib/reload', 'lib/assert'], function(reload, assert) {
     // XXX: move to toolbox
     var clone = function(o) {
         // http://www.andrewsellick.com/93/javascript-clone-object-function
