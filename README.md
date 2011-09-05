@@ -18,7 +18,7 @@ A simple test suite may look like this:
 
 ```javascript
 define(['bunit'], function(bunit) {
-    var assert = bu.assert;
+    var assert = bunit.assert;
 
     bunit('suite name', {
         _: { // set up (run before each test)
