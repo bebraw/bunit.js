@@ -9,6 +9,8 @@ bunit.js provides a simple way to define unit tests and run them using a web pag
 
 I'll cover the API in more detail next and provide more concrete guidance in case the above sounded weird to you.
 
+If you want to use to use bunit with Node, you'll need to use RequireJS node adapter (http://requirejs.org/docs/node.html) and ensure the test output is set to console. Check out nodedemo directory for more details.
+
 Suite API
 ---------
 
