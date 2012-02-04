@@ -78,9 +78,6 @@ define(['lib/reload'], function(reload) {
                     var model = bunit._tests[i];
                     var testSet = model.tests;
 
-                    var attrs = '_' in testSet? testSet._: {};
-                    delete testSet._;
-
                     var setUp = 'setUp' in testSet? testSet.setUp: function() {};
                     delete testSet.setUp;
 
@@ -93,7 +90,7 @@ define(['lib/reload'], function(reload) {
                         var test = testSet[testName];
 
                         try {
-                            test.apply(clone(attrs), setUp());
+                            test.apply(testSet, setUp());
 
                             out.push({state: 'passed', text: 'PASSED: ' + testName});
 

@@ -2,14 +2,11 @@ define(['bunit', 'assert'], function(bunit, assert) {
     var toreDown = false;
 
     bunit('Bunit', {
-        _: {
-            a: 5
-        },
         setUp: function() {
             return ['foobar', 21]
         },
-        underscore: function() {
-            assert(this.a).equals(5);
+        utility: function() {
+            assert(this._utility()).equals(5);
         },
         setUpParameters: function(a, b) {
             assert(a).equals('foobar');
@@ -20,6 +17,9 @@ define(['bunit', 'assert'], function(bunit, assert) {
         },
         tearDown: function() {
             toreDown = true;
+        },
+        _utility: function() {
+            return 5;
         }
     });
 });

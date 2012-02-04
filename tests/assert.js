@@ -1,32 +1,32 @@
 define(['bunit', 'assert'], function(bunit, assert) {
     bunit('Assert', {
-        _: {
-            a: 5
+        setUp: function() {
+            return [5];
         },
-        equals: function() {
-            assert(this.a).equals(5);
+        equals: function(a) {
+            assert(a).equals(5);
         },
-        not: function() {
-            assert(this.a).not().equals(6);
+        not: function(a) {
+            assert(a).not().equals(6);
         },
-        doubleNot: function() {
-            assert(this.a).not().not().equals(5);
+        doubleNot: function(a) {
+            assert(a).not().not().equals(5);
         },
-        between: function() {
-            assert(this.a).between(0, 10); // [0, 10]
-            assert(this.a).between(0); // [0, [
-            assert(this.a).between(null, 10); // ], 10]
+        between: function(a) {
+            assert(a).between(0, 10); // [0, 10]
+            assert(a).between(0); // [0, [
+            assert(a).between(null, 10); // ], 10]
             assert(-5).between(null, 10); // ], 10]
         },
-        isDefined: function() {
-            assert(this.a).isDefined();
+        isDefined: function(a) {
+            assert(a).isDefined();
         },
-        is: function() {
-            assert(this.a).is('number');
-            assert(this.a).is('array', 'number');
+        is: function(a) {
+            assert(a).is('number');
+            assert(a).is('array', 'number');
         },
-        within: function() {
-            assert(this.a).within(1, 3, 5, 10);
+        within: function(a) {
+            assert(a).within(1, 3, 5, 10);
         },
         arrays: function() {
             assert([1, 2, 3]).equals([1, 2, 3]);

@@ -21,10 +21,7 @@ A simple test suite definition may look like this:
 ```javascript
 define(['bunit', 'assert'], function(bunit, assert) {
     bunit('suite name', {
-        _: { // set up (run before each test)
-            a: 5
-        },
-        setUp: function() { // another, more robust way to set up
+        setUp: function() {
             return [5, 'foo'];
         },
         tearDown: function() {
@@ -32,8 +29,10 @@ define(['bunit', 'assert'], function(bunit, assert) {
         },
         someTest: function(a, b) {
             // a = 5, b = 'foo'
-            assert(this.a).equals(5); // access set up attributes via this
+            this._someUtil();
+            assert(a).equals(5); // access set up attributes via this
         },
+        _someUtil: function() {...}
         ... // more tests
     });
 });
