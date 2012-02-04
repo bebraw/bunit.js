@@ -89,6 +89,10 @@ define(['lib/reload'], function(reload) {
                     for(var testName in testSet) {
                         var test = testSet[testName];
 
+                        if(testName[0] == '_') {
+                            continue;
+                        }
+
                         try {
                             test.apply(testSet, setUp());
 
