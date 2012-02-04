@@ -1,20 +1,4 @@
 define(['lib/reload'], function(reload) {
-    // XXX: move to toolbox
-    var clone = function(o) {
-        // http://www.andrewsellick.com/93/javascript-clone-object-function
-        if(typeof(o) != 'object' || !o) {
-            return o;
-        }
-
-        var newO = new Object();
-
-        for(var i in o) {
-            newO[i] = clone(o[i]);
-        }
-
-        return newO;
-    };
-
     // output
     var consoleOutput = function(report) {
         console.log(report.text);
