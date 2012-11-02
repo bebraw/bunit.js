@@ -7,8 +7,8 @@ define(['lib/reload'], function(reload) {
     var HTMLOutput = function(target) {
         return function(report) {
             target.innerHTML += '<div class="' + report.state + '">' + report.text + '</div>';
-        }
-    }
+        };
+    };
 
     // core logic
     var bunit = function(setName, newTests) {
@@ -62,7 +62,7 @@ define(['lib/reload'], function(reload) {
                     var model = bunit._tests[i];
                     var testSet = model.tests;
 
-                    var setUp = 'setUp' in testSet? testSet.setUp: function() {};
+                    var setUp = 'setUp' in testSet? testSet.setUp: function() { return []; };
                     delete testSet.setUp;
 
                     var tearDown = 'tearDown' in testSet? testSet.tearDown: function() {};
