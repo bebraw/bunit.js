@@ -1,17 +1,25 @@
 define(['lib/reload'], function(reload) {
     // output
-    var consoleOutput = function(report) {
+    function consoleOutput(report) {
         console.log(report.text);
-    };
+    }
 
-    var HTMLOutput = function(target) {
+    function HTMLOutput(target) {
         return function(report) {
             target.innerHTML += '<div class="' + report.state + '">' + report.text + '</div>';
         };
-    };
+    }
+
+    // helpers
+    function noop() {}
+    function ret(a) {
+        return function() {
+            return a;
+        };
+    }
 
     // core logic
-    var bunit = function(setName, newTests) {
+    function bunit(setName, newTests) {
         if(!('_tests' in bunit)) {
             bunit._tests = [];
         }
@@ -19,7 +27,7 @@ define(['lib/reload'], function(reload) {
         if(setName && newTests) {
             bunit._tests.push({name: setName, tests: newTests});
         }
-    };
+    }
 
     bunit.runner = function(interval) {
         var scope = this;
@@ -28,7 +36,7 @@ define(['lib/reload'], function(reload) {
         return {
             defaultUI: function(parent) {
                 parent = parent || document.body;
-                
+
                 var outputArea = document.createElement('div');
 
                 scope.output = HTMLOutput(outputArea);
@@ -62,10 +70,10 @@ define(['lib/reload'], function(reload) {
                     var model = bunit._tests[i];
                     var testSet = model.tests;
 
-                    var setUp = 'setUp' in testSet? testSet.setUp: function() { return []; };
+                    var setUp = 'setUp' in testSet? testSet.setUp: ret([]);
                     delete testSet.setUp;
 
-                    var tearDown = 'tearDown' in testSet? testSet.tearDown: function() {};
+                    var tearDown = 'tearDown' in testSet? testSet.tearDown: noop;
                     delete testSet.tearDown;
 
                     out.push({state: 'started', text: 'Running "' + model.name + '" tests'});

@@ -3,7 +3,7 @@ define(['bunit', 'assert'], function(bunit, assert) {
 
     bunit('Bunit', {
         setUp: function() {
-            return ['foobar', 21]
+            return ['foobar', 21];
         },
         utility: function() {
             assert(this._utility()).equals(5);
