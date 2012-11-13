@@ -15,6 +15,15 @@ define(['bunit', 'assert'], function(bunit, assert) {
             assert(o.a).equals('foobar');
             assert(o.b).equals(21);
         },
+        async: function(o, done) {
+            done();
+        },
+        asyncTest: function(o, done) {
+            done();
+        },
+        notAsync: function(o, done) {
+            assert(done).not().isDefined();
+        },
         tearDownCalled: function() {
             assert(toreDown).equals(true);
         },

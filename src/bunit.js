@@ -43,6 +43,7 @@ define(['lib/reload'], function(reload) {
             run: function(opts) {
                 opts = opts || {};
 
+                var asyncTests = 0;
                 var passedTests = 0;
                 var testTotal = 0;
                 var out = [];
@@ -75,18 +76,32 @@ define(['lib/reload'], function(reload) {
 
                     for(var testName in testSet) {
                         var test = testSet[testName];
+                        var doneCb;
 
                         if(testName[0] == '_') {
                             continue;
                         }
 
+                        if(testName.indexOf('async') === 0) {
+                            console.log(testName);
+                            doneCb = asyncTest(testName);
+                            asyncTests++;
+                        }
+                        else {
+                            // needed due to hoisting
+                            doneCb = undefined;
+                        }
+
                         try {
                             var params = setUp();
-                            test.apply(testSet, params? [params]: []);
 
-                            out.push({state: 'passed', text: 'PASSED: ' + testName});
+                            test.apply(testSet, params? [params, doneCb]: [undefined, doneCb]);
 
-                            passedTests++;
+                            if(!doneCb) {
+                                out.push({state: 'passed', text: 'PASSED: ' + testName});
+
+                                passedTests++;
+                            }
                         }
                         catch(e) {
                             out.push({state: 'failed', text: 'FAILED: ' + testName});
@@ -98,6 +113,12 @@ define(['lib/reload'], function(reload) {
                         testTotal++;
                     }
                 }
+
+                // TODO: could add some configurable time limit here
+                // now it will just poll async tests till those are
+                // executed. if any of them fails, whole suite fails
+                // to finish
+                while(asyncTests) {}
 
                 var finished = {state: 'finished', text: passedTests + '/' + testTotal + ' tests passed'};
                 out.unshift(finished);
@@ -111,6 +132,15 @@ define(['lib/reload'], function(reload) {
 
                 if(scope.reloader.interval()) {
                     scope.reloader.play();
+                }
+
+                function asyncTest(testName) {
+                    return function() {
+                        out.push({state: 'passed', text: 'PASSED: ' + testName});
+
+                        passedTests++;
+                        asyncTests--;
+                    };
                 }
             }
         };

@@ -34,6 +34,11 @@ define(['bunit', 'assert'], function(bunit, assert) {
             this._someUtil();
             assert(o.a).equals(5);
         },
+        asyncTest: function(o, done) {
+            // perform some async op here
+            // after finished, call done (or however you want to name it)
+            done();
+        }
         _someUtil: function() {...}
         ... // more tests
     });
