@@ -22,15 +22,17 @@ A simple test suite definition may look like this:
 define(['bunit', 'assert'], function(bunit, assert) {
     bunit('suite name', {
         setUp: function() {
-            return [5, 'foo'];
+            return {
+                a: 5,
+                b: 'foo'
+            }
         },
         tearDown: function() {
             ... // executed after each test whether it passed or not
         },
-        someTest: function(a, b) {
-            // a = 5, b = 'foo'
+        someTest: function(o) {
             this._someUtil();
-            assert(a).equals(5); // access set up attributes via this
+            assert(o.a).equals(5);
         },
         _someUtil: function() {...}
         ... // more tests

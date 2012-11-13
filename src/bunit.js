@@ -12,11 +12,6 @@ define(['lib/reload'], function(reload) {
 
     // helpers
     function noop() {}
-    function ret(a) {
-        return function() {
-            return a;
-        };
-    }
 
     // core logic
     function bunit(setName, newTests) {
@@ -70,7 +65,7 @@ define(['lib/reload'], function(reload) {
                     var model = bunit._tests[i];
                     var testSet = model.tests;
 
-                    var setUp = 'setUp' in testSet? testSet.setUp: ret([]);
+                    var setUp = 'setUp' in testSet? testSet.setUp: noop;
                     delete testSet.setUp;
 
                     var tearDown = 'tearDown' in testSet? testSet.tearDown: noop;
@@ -86,7 +81,8 @@ define(['lib/reload'], function(reload) {
                         }
 
                         try {
-                            test.apply(testSet, setUp());
+                            var params = setUp();
+                            test.apply(testSet, params? [params]: []);
 
                             out.push({state: 'passed', text: 'PASSED: ' + testName});
 
