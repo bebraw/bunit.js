@@ -1,1 +1,1 @@
-define(['./assert', './bunit']);
+define(['./assert', './bunit', './nosetup']);
