@@ -93,9 +93,13 @@ define(['lib/reload'], function(reload) {
                         }
 
                         try {
-                            var params = setUp();
+                            var params = setUp(opts);
 
-                            test.apply(testSet, params? [params, doneCb]: [undefined, doneCb]);
+                            if(!(params instanceof Array)) params = [params];
+
+                            if(doneCb) params.push(doneCb);
+
+                            test.apply(testSet, params);
 
                             if(!doneCb) {
                                 out.push({state: 'passed', text: 'PASSED: ' + testName});
