@@ -147,6 +147,10 @@ See https://github.com/bebraw/jswiki/wiki/Testing-frameworks .
 * https://github.com/bebraw/turtles.js
 * https://github.com/bebraw/colorjs
 
+## Contributors
+
+* [systemsplanet](https://github.com/systemsplanet) - Expanded setUp, eliminated hard loop
+
 ## License
 
 bunit.js is available under MIT license. See LICENSE for more details.
