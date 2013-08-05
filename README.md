@@ -1,5 +1,4 @@
-bunit.js
-========
+# bunit.js
 
 bunit.js provides a simple way to define unit tests and run them using a web page. In order to use it, you'll likely want to do something like this:
 
@@ -11,8 +10,7 @@ I'll cover the API in more detail next and provide more concrete guidance in cas
 
 If you want to use to use bunit with Node, you'll need to use RequireJS node adapter (http://requirejs.org/docs/node.html) and ensure the test output is set to console. Check out nodedemo directory for more details.
 
-Suite API
----------
+## Suite API
 
 bunit.js provides a simple way to define test suites containing multiple tests. Each of these suites will be run separately by the test runner.
 
@@ -112,8 +110,7 @@ define(['./color']);
 
 You could easily define these kind of test sets and set up separate test pages for them in case you have a large amount of tests to run.
 
-Assertion API
--------------
+## Assertion API
 
 The assertion API is built upon the idea of chaining. Each API call is defined roughly as follows: assert(<given value>).<action>(<expected value>). In addition there is a "not" modifier that may be used to invert the assertion. See the examples below for a more concrete explanation:
 
@@ -141,18 +138,15 @@ assert(a).within(3); // not ok, raises AssertionError
 
 Note that you do not have to use the assertion library provided with bunit.js. You can easily replace it entirely with something else.
 
-Other libraries
----------------
+## Other libraries
 
 See https://github.com/bebraw/jswiki/wiki/Testing-frameworks .
 
-Projects using bunit.js
------------------------
+## Projects using bunit.js
 
 * https://github.com/bebraw/turtles.js
 * https://github.com/bebraw/colorjs
 
-License
--------
+## License
 
 bunit.js is available under MIT license. See LICENSE for more details.
