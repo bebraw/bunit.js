@@ -43,10 +43,10 @@ define(['lib/reload'], function(reload) {
             run: function(opts) {
                 opts = opts || {};
 
-                var asyncTests = 0;
-                var passedTests = 0;
-                var testTotal = 0;
-                var out = [];
+                scope.asyncTests = 0;
+                scope.passedTests = 0;
+                scope.testTotal = 0;
+                scope.out = [];
 
                 scope.output = 'output' in opts? opts.output: scope.output;
 
@@ -72,7 +72,7 @@ define(['lib/reload'], function(reload) {
                     var tearDown = 'tearDown' in testSet? testSet.tearDown: noop;
                     delete testSet.tearDown;
 
-                    out.push({state: 'started', text: 'Running "' + model.name + '" tests'});
+                    scope.out.push({state: 'started', text: 'Running "' + model.name + '" tests'});
 
                     for(var testName in testSet) {
                         var test = testSet[testName];
@@ -85,7 +85,7 @@ define(['lib/reload'], function(reload) {
                         if(testName.indexOf('async') === 0) {
                             console.log(testName);
                             doneCb = asyncTest(testName);
-                            asyncTests++;
+                            scope.asyncTests++;
                         }
                         else {
                             // needed due to hoisting
@@ -102,49 +102,48 @@ define(['lib/reload'], function(reload) {
                             test.apply(testSet, params);
 
                             if(!doneCb) {
-                                out.push({state: 'passed', text: 'PASSED: ' + testName});
+                                scope.out.push({state: 'passed', text: 'PASSED: ' + testName});
 
-                                passedTests++;
+                                scope.passedTests++;
                             }
                         }
                         catch(e) {
-                            out.push({state: 'failed', text: 'FAILED: ' + testName});
-                            out.push({state: 'error', text: e});
+                            scope.out.push({state: 'failed', text: 'FAILED: ' + testName});
+                            scope.out.push({state: 'error', text: e});
                         }
 
                         tearDown();
 
-                        testTotal++;
+                        scope.testTotal++;
                     }
                 }
+                function asyncTest(testName) {
+                    return function() {
+                        scope.out.push({state: 'passed', text: 'PASSED: ' + testName});
+                        scope.passedTests++;
+                        scope.asyncTests--;
+                    };
+                }
 
-                // TODO: could add some configurable time limit here
-                // now it will just poll async tests till those are
-                // executed. if any of them fails, whole suite fails
-                // to finish
-                while(asyncTests) {}
+                this.poll(this);
+            },
+            poll: function(runner) {
+                if(scope.asyncTests > 0) {
+                    setTimeout(function() {runner.poll(runner);}, 200);
 
-                var finished = {state: 'finished', text: passedTests + '/' + testTotal + ' tests passed'};
-                out.unshift(finished);
-                out.push(finished);
+                    return;
+                }
+                var finished = {state: 'finished', text: scope.passedTests + '/' + scope.testTotal + ' tests passed'};
+                scope.out.unshift(finished);
+                scope.out.push(finished);
 
-                for(i = 0; i < out.length; i++) {
-                    var line = out[i];
-
+                for(var i = 0; i < scope.out.length; i++) {
+                    var line = scope.out[i];
                     scope.output(line);
                 }
 
                 if(scope.reloader.interval()) {
-                    scope.reloader.play();
-                }
-
-                function asyncTest(testName) {
-                    return function() {
-                        out.push({state: 'passed', text: 'PASSED: ' + testName});
-
-                        passedTests++;
-                        asyncTests--;
-                    };
+                   scope.reloader.play();
                 }
             }
         };
