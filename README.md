@@ -59,12 +59,13 @@ require(
     {
         paths: {
             assert: 'lib/assert',
-            bunit: 'src/bunit'
+            bunit: 'src/bunit',
+            domReady: 'path/to/domReady'  // see https://requirejs.org/docs/api.html#pageload
         }
     },
-    ['bunit', 'tests'],
-    function(bunit, tests) {
-        require.ready(function() {
+    ['bunit', 'tests', 'domReady'],
+    function(bunit, tests, domReady) {
+        domReady(function() {
             var outputArea = document.createElement('div');
 
             document.body.appendChild(bunit.playbackUI());
@@ -88,11 +89,12 @@ require(
         paths: {
             assert: 'lib/assert',
             bunit: 'src/bunit'
+            domReady: 'path/to/domReady'   // see https://requirejs.org/docs/api.html#pageload
         }
     },
-    ['bunit', 'tests'],
-    function(bunit, tests) {
-        require.ready(function() {
+    ['bunit', 'tests', 'domReady'],
+    function(bunit, tests, domReady) {
+        domReady(function() {
             var r = bunit.runner();
 
             r.defaultUI();
